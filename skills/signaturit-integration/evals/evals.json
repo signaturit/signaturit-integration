@@ -1,0 +1,46 @@
+{
+  "skill_name": "signaturit-integration",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "When a contract is approved in my CRM, send it through Signaturit to two signers, wait until the signature process is completed, download the signed document, and store it back in the CRM. We use Node.js.",
+      "expected_output": "A design + Node.js implementation that: creates a two-recipient signature request, prefers webhooks over polling for completion detection, re-fetches authoritative status rather than trusting webhook bodies, distinguishes retryable vs non-retryable errors, guards against duplicate signature creation, and keeps credentials in env config with an explicit sandbox/production split.",
+      "files": [],
+      "assertions": [
+        "Persists the Signaturit signature/request ID against the CRM record as an idempotency guard before/immediately after creation, to prevent duplicate signature requests on retry",
+        "Uses events_url/webhooks as the primary mechanism to detect completion rather than tight polling",
+        "Webhook handler re-fetches authoritative status via GET before acting, rather than trusting the webhook body directly",
+        "Explicitly states that Signaturit does not document a webhook HMAC/signature-verification mechanism, rather than inventing or assuming one exists",
+        "Retry logic distinguishes retryable (5xx/timeout/429) from non-retryable (400/401/403/404) errors and does not retry the latter automatically",
+        "Keeps credentials out of source code via environment variables or a secrets manager, and treats sandbox/production as a config-only switch"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I want to send an NDA for signature to a candidate before their interview, using a Signaturit template. I'm using Python/Flask.",
+      "expected_output": "A design + Flask implementation that creates a single-recipient signature request from an existing template, tracks status via webhook with authoritative re-fetch, guards against duplicate sends per candidate, and treats sandbox/production template IDs and tokens as environment-specific config.",
+      "files": [],
+      "assertions": [
+        "Uses the templates parameter on signature-request creation to reference the existing NDA template rather than re-uploading a new document",
+        "Retry logic distinguishes retryable (5xx/timeout/429) from non-retryable (400/401/403/404) errors",
+        "Includes an idempotency guard (e.g. DB-backed) to prevent sending a duplicate NDA to the same candidate on retry",
+        "Does not claim a webhook HMAC/signature-verification mechanism exists; treats webhook as a trigger to re-check status rather than a trusted payload",
+        "Addresses sandbox vs production as environment-variable-driven config (separate tokens/template IDs), not a code change"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "We batch-upload scanned contracts (some are 40MB) nightly and need all our sales team members to countersign each one in a specific order, then get notified in Slack when done.",
+      "expected_output": "A design that honestly flags the undocumented file-size limit and the lack of a per-recipient ordering field (only request-level sequential/parallel), notifies Slack only on final completion, guards against duplicate nightly submissions, and backstops webhooks with reconciliation polling.",
+      "files": [],
+      "assertions": [
+        "Flags the 40MB file size against documented limits honestly (states the 15MB threshold is for a different resource and the absolute max for signature uploads is unconfirmed) rather than citing a specific undocumented max size as fact",
+        "Flags that Signaturit has no per-recipient custom ordering field (only request-level sequential/parallel), rather than asserting a per-recipient 'order' field exists",
+        "Slack notification is triggered only on full/final completion, not on each intermediate per-signer event",
+        "Includes an idempotency guard to prevent duplicate signature requests when the nightly batch job is re-run",
+        "Does not claim a webhook HMAC/signature-verification mechanism exists for Signaturit webhooks",
+        "Includes a reconciliation/polling backstop given no documented webhook delivery guarantee"
+      ]
+    }
+  ]
+}

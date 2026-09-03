@@ -1,0 +1,10 @@
+{
+  "name": "signaturit-integration",
+  "version": "1.0.0",
+  "description": "Turns Claude into a Signaturit integration expert: describe a business workflow and it designs and implements the correct Signaturit API integration, with production-safe defaults for auth, retries, idempotency, and webhooks.",
+  "author": { "name": "Signaturit", "email": "support@signaturit.com" },
+  "homepage": "https://github.com/signaturit/signaturit-integration",
+  "repository": "https://github.com/signaturit/signaturit-integration",
+  "license": "MIT",
+  "keywords": ["signaturit", "e-signature", "integration", "webhooks", "api"]
+}
