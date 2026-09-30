@@ -1,9 +1,15 @@
 {
   "name": "signaturit-integration",
-  "version": "1.0.0",
-  "description": "Turns Claude into a Signaturit integration expert: describe a business workflow and it designs and implements the correct Signaturit API integration, with production-safe defaults for auth, retries, idempotency, and webhooks.",
-  "author": { "name": "Signaturit", "email": "support@signaturit.com" },
-  "homepage": "https://github.com/signaturit/signaturit-integration",
+  "displayName": "Signaturit",
+  "version": "1.0.1",
+  "description": "Turns Claude into a Signaturit integration expert: describe a business workflow in plain language and it designs and implements the correct Signaturit API integration, with production-safe defaults for auth, retries, idempotency, and webhooks.",
+  "icon": "./icon.svg",
+  "author": {
+    "name": "Signaturit",
+    "email": "support@signaturit.com",
+    "url": "https://www.signaturit.com"
+  },
+  "homepage": "https://www.signaturit.com",
   "repository": "https://github.com/signaturit/signaturit-integration",
   "license": "MIT",
   "keywords": [
