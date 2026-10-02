@@ -1,5 +1,5 @@
 ---
-name: signaturit-integration
+name: integrate
 description: Design and build custom integrations with the Signaturit e-signature/certified-email/SMS API (docs.signaturit.com). Use this whenever the user wants to connect Signaturit to a CRM, ERP, internal tool, or custom app — sending documents for signature, certified email/SMS, tracking signing status, handling Signaturit webhooks/callbacks, or downloading signed documents/audit trails — even if they only describe the business workflow in plain language (e.g. "when a deal closes, send the contract for signature and save it back to the CRM") without naming any Signaturit endpoint or API concept. Also use it for questions about Signaturit API limits, authentication, sandbox vs production setup, or troubleshooting a Signaturit integration that isn't behaving as expected.
 ---
 
